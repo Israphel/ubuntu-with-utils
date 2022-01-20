@@ -26,5 +26,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          push: ${{ (github.event_name != 'pull_request' && github.ref == 'main') || github.event.pull_request.head.repo.full_name == github.repository }}
+          push: ${{ (github.event_name == 'push' && github.ref == 'main') }}
           tags: israphel/${{ github.event.repository.name }}:latest

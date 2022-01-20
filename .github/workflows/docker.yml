@@ -31,4 +31,4 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name == 'push' }}
-          tags: israphel/${{ github.event.repository.name }}:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest

@@ -15,7 +15,7 @@ ENV LANG=en_US.UTF-8
 
 RUN apt-get -y install \
     apt-transport-https \
-    bash-completion vim less man jq bc \
+    bash-completion vim nano less man jq bc \
     lsof tree psmisc htop lshw sysstat dstat \
     iproute2 iputils-ping iptables dnsutils traceroute \
     netcat curl wget nmap socat netcat-openbsd rsync \

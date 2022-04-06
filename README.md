@@ -23,11 +23,13 @@ An Ubuntu 20.04 Docker image with some utils.
   - lshw
   - lsof
   - man
+  - mysql-client
   - nano
   - netcat
   - netcat-openbsd
   - nmap
   - p7zip-full
+  - postgresql-client
   - psmisc
   - pv
   - redis-tools

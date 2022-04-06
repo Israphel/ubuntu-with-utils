@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myubuntu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: myubuntu
+  template:
+    metadata:
+      labels:
+        name: myubuntu
+    spec:
+      containers:
+        - name: ubuntu
+          image: israphel/ubuntu-with-utils
+          command:
+            - "sleep"
+            - "365d"

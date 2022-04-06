@@ -23,7 +23,7 @@ RUN apt-get -y install \
     git tig \
     binutils acl pv \
     strace tcpdump \
-    redis-tools \
+    mysql-client postgresql-client redis-tools \
     sudo &&\
     rm -rf /var/lib/apt/lists/*
 

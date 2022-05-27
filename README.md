@@ -23,6 +23,7 @@ An Ubuntu 20.04 Docker image with some utils.
   - lshw
   - lsof
   - man
+  - mongosh
   - mysql-client
   - nano
   - netcat

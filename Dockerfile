@@ -1,7 +1,6 @@
 FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV TERM=xterm-256color
 
 RUN apt-get update
 
@@ -26,14 +25,13 @@ RUN apt-get -y install \
     mysql-client postgresql-client redis-tools \
     sudo
 
-RUN wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc \
-    | apt-key add - && \
-    echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" \
-    | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list && \
+RUN wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | apt-key add - && \
+    echo 'deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse' > /etc/apt/sources.list.d/mongodb-org-5.0.list && \
     apt-get update && \
-    apt-get install mongodb-mongosh
+    apt-get -y install mongodb-mongosh
 
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN adduser --disabled-password --gecos "ubuntu" ubuntu && \
     adduser ubuntu sudo && \
@@ -44,5 +42,7 @@ RUN adduser --disabled-password --gecos "ubuntu" ubuntu && \
 RUN cp /home/ubuntu/.bashrc /root/.bashrc
 
 WORKDIR /home/ubuntu
+
+ENV TERM=xterm-256color
 
 USER ubuntu

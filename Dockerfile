@@ -14,7 +14,7 @@ RUN locale-gen \
 ENV LANG=en_US.UTF-8
 
 RUN apt-get -y install \
-    apt-transport-https \
+    apt-transport-https gnupg2 \
     bash-completion vim nano less man jq bc \
     lsof tree psmisc htop lshw sysstat dstat \
     iproute2 iputils-ping iptables dnsutils traceroute \
@@ -24,8 +24,16 @@ RUN apt-get -y install \
     binutils acl pv \
     strace tcpdump \
     mysql-client postgresql-client redis-tools \
-    sudo &&\
-    rm -rf /var/lib/apt/lists/*
+    sudo
+
+RUN wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc \
+    | apt-key add - && \
+    echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" \
+    | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list && \
+    apt-get update && \
+    apt-get install mongodb-mongosh
+
+RUN rm -rf /var/lib/apt/lists/*
 
 RUN adduser --disabled-password --gecos "ubuntu" ubuntu && \
     adduser ubuntu sudo && \

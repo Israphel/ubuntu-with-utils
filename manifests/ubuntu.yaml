@@ -15,6 +15,7 @@ spec:
       containers:
         - name: ubuntu
           image: israphel/ubuntu-with-utils
+          imagePullPolicy: Always
           command:
             - "sleep"
             - "365d"

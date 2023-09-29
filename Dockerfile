@@ -1,3 +1,5 @@
+FROM bitnami/kubectl:1.26.9 as kubectl
+
 FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -25,10 +27,17 @@ RUN apt-get -y install \
     mysql-client postgresql-client redis-tools \
     sudo
 
-RUN wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | apt-key add - && \
-    echo 'deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse' > /etc/apt/sources.list.d/mongodb-org-5.0.list && \
+# Install MongoSH
+RUN curl -fsSL https://pgp.mongodb.com/server-7.0.asc | gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor && \
+    echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" > /etc/apt/sources.list.d/mongodb-org-7.0.list && \
     apt-get update && \
     apt-get -y install mongodb-mongosh
+
+# Install Kubectl
+COPY --from=kubectl /opt/bitnami/kubectl/bin/kubectl /usr/local/bin/
+
+# Install Azure CLI
+RUN	curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*

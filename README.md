@@ -7,6 +7,7 @@ An Ubuntu 22.04 Docker image with some utils.
 
 ## Included packages
   - acl
+  - azure-cli
   - bash-completion
   - bc
   - binutils
@@ -19,6 +20,7 @@ An Ubuntu 22.04 Docker image with some utils.
   - iptables
   - iputils-ping
   - jq
+  - kubectl
   - less
   - lshw
   - lsof

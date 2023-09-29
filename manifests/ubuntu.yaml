@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fadonbuntu
+  name: ubuntu
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: fadonbuntu
+      name: ubuntu
   template:
     metadata:
       labels:
-        name: fadonbuntu
+        name: ubuntu
     spec:
       containers:
         - name: ubuntu

@@ -1,4 +1,4 @@
-FROM bitnami/kubectl:1.26.9 as kubectl
+FROM bitnami/kubectl:1.28.7 as kubectl
 
 FROM ubuntu:22.04
 

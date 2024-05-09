@@ -1,4 +1,4 @@
-FROM bitnami/kubectl:1.28.7 as kubectl
+FROM bitnami/kubectl:1.29.2 as kubectl
 
 FROM ubuntu:22.04
 
@@ -38,6 +38,9 @@ COPY --from=kubectl /opt/bitnami/kubectl/bin/kubectl /usr/local/bin/
 
 # Install Azure CLI
 RUN	curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+
+# Install Temporal CLI
+RUN curl -sSf https://temporal.download/cli.sh | bash
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*

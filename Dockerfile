@@ -1,4 +1,4 @@
-FROM bitnami/kubectl:1.29.2 as kubectl
+FROM bitnami/kubectl:1.29.11 AS kubectl
 
 FROM ubuntu:22.04
 
@@ -15,17 +15,48 @@ RUN locale-gen \
 ENV LANG=en_US.UTF-8
 
 RUN apt-get -y install \
-    apt-transport-https gnupg2 \
-    bash-completion vim nano less man jq bc \
-    lsof tree psmisc htop lshw sysstat dstat \
-    iproute2 iputils-ping iptables dnsutils traceroute \
-    netcat curl wget nmap socat netcat-openbsd rsync \
+    acl \
+    apt-transport-https \
+    bash-completion \
+    bc \
+    binutils \
+    curl \
+    dnsutils \
+    dstat \
+    git \
+    gnupg2 \
+    htop \
+    iperf3 \
+    iproute2 \
+    iptables \
+    iputils-ping \
+    jq \
+    less \
+    lshw \
+    lsof \
+    man \
+    mysql-client \
+    nano \
+    netcat \
+    netcat-openbsd \
+    nmap \
     p7zip-full \
-    git tig \
-    binutils acl pv \
-    strace tcpdump \
-    mysql-client postgresql-client redis-tools \
-    sudo
+    postgresql-client \
+    psmisc \
+    pv \
+    redis-tools \
+    rsync \
+    socat \
+    strace \
+    sudo \
+    sysstat \
+    tcpdump \
+    telnet \
+    tig \
+    traceroute \
+    tree \
+    vim \
+    wget
 
 # Install MongoSH
 RUN curl -fsSL https://pgp.mongodb.com/server-7.0.asc | gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor && \

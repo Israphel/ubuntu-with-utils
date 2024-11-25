@@ -16,6 +16,7 @@ An Ubuntu 22.04 Docker image with some utils.
   - dstat
   - git
   - htop
+  - iperf3
   - iproute2
   - iptables
   - iputils-ping
@@ -42,6 +43,8 @@ An Ubuntu 22.04 Docker image with some utils.
   - sudo
   - sysstat
   - tcpdump
+  - telnet
+  - temporal
   - tig
   - traceroute
   - tree

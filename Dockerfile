@@ -1,6 +1,9 @@
-FROM bitnami/kubectl:1.29.11 AS kubectl
+FROM bitnami/kubectl:latest AS kubectl
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
+
+ARG TARGETARCH
+ENV ARCH=$TARGETARCH
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -14,17 +17,18 @@ RUN locale-gen \
 
 ENV LANG=en_US.UTF-8
 
-RUN apt-get -y install \
+RUN apt-get -y --no-install-recommends install \
     acl \
     apt-transport-https \
     bash-completion \
     bc \
     binutils \
+    ca-certificates \
     curl \
     dnsutils \
     dstat \
     git \
-    gnupg2 \
+    gnupg \
     htop \
     iperf3 \
     iproute2 \
@@ -37,7 +41,6 @@ RUN apt-get -y install \
     man \
     mysql-client \
     nano \
-    netcat \
     netcat-openbsd \
     nmap \
     p7zip-full \
@@ -59,8 +62,8 @@ RUN apt-get -y install \
     wget
 
 # Install MongoSH
-RUN curl -fsSL https://pgp.mongodb.com/server-7.0.asc | gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor && \
-    echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" > /etc/apt/sources.list.d/mongodb-org-7.0.list && \
+RUN curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor && \
+    echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/8.0 multiverse" > /etc/apt/sources.list.d/mongodb-org-8.0.list && \
     apt-get update && \
     apt-get -y install mongodb-mongosh
 
@@ -73,16 +76,17 @@ RUN	curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 # Install Temporal CLI
 RUN curl -sSf https://temporal.download/cli.sh | bash
 
+# Install NATS client
+RUN curl -L -o /tmp/nats.deb \
+    https://github.com/nats-io/natscli/releases/download/v0.0.35/nats-0.0.35-${ARCH}.deb && \
+    apt-get install -y /tmp/nats.deb && \
+    rm /tmp/nats.deb
+
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN adduser --disabled-password --gecos "ubuntu" ubuntu && \
-    adduser ubuntu sudo && \
-    echo "ubuntu ALL=(ALL:ALL) NOPASSWD: ALL" >> /etc/sudoers && \
-    touch /home/ubuntu/.sudo_as_admin_successful && \
-    chown -R root:sudo /usr/local
-
-RUN cp /home/ubuntu/.bashrc /root/.bashrc
+RUN echo "ubuntu ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ubuntu && \
+    chmod 0440 /etc/sudoers.d/ubuntu
 
 WORKDIR /home/ubuntu
 

@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/Israphel/ubuntu-with-utils/actions/workflows/docker.yml/badge.svg)](https://github.com/Israphel/ubuntu-with-utils/actions/workflows/docker.yml)
 
 ## Overview
-An Ubuntu 22.04 Docker image with some utils.
+An Ubuntu 24.04 Docker image with some utils.
 
 ## Included packages
   - acl
@@ -28,6 +28,7 @@ An Ubuntu 22.04 Docker image with some utils.
   - man
   - mongosh
   - mysql-client
+  - nats
   - nano
   - netcat
   - netcat-openbsd

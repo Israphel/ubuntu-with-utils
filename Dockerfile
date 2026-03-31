@@ -76,6 +76,7 @@ RUN	curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 # Install Temporal CLI
 RUN curl -sSf https://temporal.download/cli.sh | bash
 
+# Install NATS client
 RUN curl -L -o /tmp/nats.deb \
     https://github.com/nats-io/natscli/releases/download/v0.0.35/nats-0.0.35-${ARCH}.deb && \
     apt-get install -y /tmp/nats.deb && \
